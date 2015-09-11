@@ -1,0 +1,33 @@
+<div ng-app="twitchApp">
+  <h1 class='text-primary text-center'>TwitchTV</h1>
+  <div class="container" ng-controller="userCtrler">
+    <div class="menu">
+      <ul class="nav nav-tabs  nav-justified">
+        <li class="active"><a id='all' data-toggle="pill" href="#" ng-click="getAllData()">ALL</a></li>
+        <li><a id='online' data-toggle="pill" href="#" ng-click="online()">ONLINE</a></li>
+        <li><a id='offline' data-toggle="pill" href="#" ng-click="offline()">OFFLINE</a></li>
+      </ul>
+      <div class="search clearfix">
+        <span class="glyphicon glyphicon-name"></span><input class="input-lg" id="search" type="text" ng-model="twitchUser.data.display_name" placeholder="Type search text here..." />
+      </div>
+    </div>
+    <div id="list">
+      <ul class='channels'>
+        <li ng-repeat="user in usersData | filter:twitchUser">
+          <div class='channel'>
+            <a ng-href="http://www.twitch.tv/{{user.data.display_name}}" target="_blank">
+              <img class='pic img-circle' src='http://en.arij.net/wp-content/themes/arij/images/photo.jpg' ng-src="{{user.data.logo}}" alt="{{user.data.display_name}}" />
+              <div class='user'>{{user.data.display_name}}
+                <span ng-hide="{{user.data.stream.stream!=null}}" class='statusOFF'>offline</span>
+                <span ng-show="{{user.data.stream.stream!=null}}" class='statusON'>online</span>
+              </div>
+              <div class='url'>http://www.twitch.tv/{{user.data.display_name}}</div>
+              <div class='desc'>{{user.data.stream.stream.channel.status.slice(0,35)}}</div>
+              <div class="closed" ng-hide="{{user.data.stream.status!=422}}"><span>Account Closed</span></div>
+            </a>  
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
